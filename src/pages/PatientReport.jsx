@@ -1,11 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { motion } from "framer-motion";
 
 const PatientReport = () => {
+  const navigate = useNavigate();
   const stored = localStorage.getItem("recentPatient");
   const patient = stored ? JSON.parse(stored) : null;
   const [showHeatmap, setShowHeatmap] = useState(false);
+  const [authChecked, setAuthChecked] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+    setAuthChecked(true);
+  }, [navigate]);
+
+  // Show loading until authentication is checked
+  if (!authChecked) {
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen bg-gray-50 py-12 px-4 flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <p className="mt-4 text-gray-600">Checking authentication...</p>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   const pred = patient?.prediction || { label: "no-stone", confidence: 0.9 };
 

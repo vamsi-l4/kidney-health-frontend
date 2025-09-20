@@ -5,16 +5,39 @@ import Navbar from "../components/Navbar";
 const Profile = () => {
   const [user, setUser] = useState({ name: "", email: "" });
   const [editing, setEditing] = useState(false);
+  const [authChecked, setAuthChecked] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+    setAuthChecked(true);
+
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser) {
       setUser(storedUser);
     } else {
       setUser({ name: "Guest User", email: "guest@example.com" });
     }
-  }, []);
+  }, [navigate]);
+
+  // Show loading until authentication is checked
+  if (!authChecked) {
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 flex items-center justify-center px-4">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <p className="mt-4 text-gray-600">Checking authentication...</p>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   const handleSave = () => {
     localStorage.setItem("user", JSON.stringify(user));
@@ -22,8 +45,21 @@ const Profile = () => {
   };
 
   const handleLogout = () => {
+    // Clear all user data from localStorage
+    localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("recentPatient");
+
+    // Clear reports data if it exists
+    localStorage.removeItem("reports");
+
+    // Navigate to login and force page refresh
     navigate("/login");
+
+    // Force page refresh to clear all component states
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   };
 
   return (

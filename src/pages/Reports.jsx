@@ -6,6 +6,8 @@ import API from "../services/api";
 
 const Reports = () => {
   const [reports, setReports] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [authChecked, setAuthChecked] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,9 +16,11 @@ const Reports = () => {
       navigate("/login");
       return;
     }
+    setAuthChecked(true);
 
     const fetchReports = async () => {
       try {
+        setLoading(true);
         const res = await API.get("/reports");
         setReports(res.data || []);
       } catch (err) {
@@ -25,10 +29,27 @@ const Reports = () => {
           localStorage.removeItem("token");
           navigate("/login");
         }
+      } finally {
+        setLoading(false);
       }
     };
     fetchReports();
   }, [navigate]);
+
+  // Show loading until authentication is checked
+  if (!authChecked) {
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen bg-gray-50 py-10 px-4 flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <p className="mt-4 text-gray-600">Checking authentication...</p>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -93,8 +114,8 @@ const Reports = () => {
                     </button>
                     <button
                       onClick={() => {
-                        import("jspdf").then(jsPDF => {
-                          const doc = new jsPDF.jsPDF();
+                        import("jspdf").then(({ default: jsPDF }) => {
+                          const doc = new jsPDF();
                           const text = `
 Patient Name: ${rep.name || "Unknown Patient"}
 Date: ${new Date(rep.createdAt).toLocaleString()}

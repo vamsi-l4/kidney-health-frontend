@@ -9,8 +9,21 @@ const Navbar = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   const handleLogout = () => {
+    // Clear all user data from localStorage
+    localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("recentPatient");
+
+    // Clear reports data if it exists
+    localStorage.removeItem("reports");
+
+    // Navigate to login and force page refresh
     navigate("/login");
+
+    // Force page refresh to clear all component states
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   };
 
   return (
@@ -21,7 +34,7 @@ const Navbar = () => {
       className="sticky top-3 z-50 w-full"
     >
       <div className="max-w-6xl mx-auto px-6 py-3 md:py-4 flex items-center justify-between rounded-2xl bg-white/70 backdrop-blur-lg border border-slate-200 shadow-md">
-        
+
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
           <img src={kidneyLogo} alt="Logo" className="h-8 sm:h-9 object-contain" />
