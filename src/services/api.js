@@ -15,18 +15,6 @@ API.interceptors.request.use((cfg) => {
   return cfg;
 });
 
-// Handle 401 responses
-API.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem("token");
-      window.location.href = "/login";
-    }
-    return Promise.reject(error);
-  }
-);
-
 export const predictStone = async (file) => {
   const formData = new FormData();
   formData.append("file", file);
