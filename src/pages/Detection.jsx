@@ -23,7 +23,6 @@ const Detection = () => {
     setAuthChecked(true);
   }, [navigate]);
 
-  // Show loading until authentication is checked
   if (!authChecked) {
     return (
       <>
@@ -47,22 +46,22 @@ const Detection = () => {
   const submit = async (e) => {
     e.preventDefault();
     if (!file) return alert("Select a scan image first.");
-    const fd = new FormData();
-    fd.append("file", file);
     try {
       setLoading(true);
-      const res = await API.post("/predict", fd, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      const data = res.data || res;
-      setResult(data);
+      const data = await API.post("/predict", (() => {
+        const fd = new FormData();
+        fd.append("file", file);
+        return fd;
+      })(), { headers: { "Content-Type": "multipart/form-data" } });
 
-      // Save quick detection to history
+      setResult(data.data ?? data);
+
       const record = {
         name: "Quick Detection",
-        prediction: data.prediction ?? data,
+        prediction: data.data?.prediction ?? data.data,
         createdAt: new Date().toISOString(),
       };
+
       try {
         await API.post("/reports", record);
       } catch (err) {
@@ -151,7 +150,7 @@ const Detection = () => {
                 {loading && (
                   <div className="flex items-center gap-3">
                     <div className="w-12">
-                      <Lottie animationData={loaderAnim} loop={true} />
+                      <Lottie animationData={loaderAnim} loop />
                     </div>
                     <div>Analyzing image — please wait</div>
                   </div>
@@ -161,16 +160,13 @@ const Detection = () => {
                   <div className="space-y-3">
                     <div className="text-sm text-gray-600">Prediction</div>
                     <div className="text-lg font-semibold">
-                      {result.prediction?.label ??
-                        result.label ??
-                        "Unknown"}
+                      {result.prediction?.label ?? result.label ?? "Unknown"}
                     </div>
                     <div className="text-sm text-gray-500">
                       Confidence:{" "}
                       {(
-                        (result.prediction?.confidence ??
-                          result.confidence ??
-                          0) * 100
+                        (result.prediction?.confidence ?? result.confidence ?? 0) *
+                        100
                       ).toFixed(2)}
                       %
                     </div>

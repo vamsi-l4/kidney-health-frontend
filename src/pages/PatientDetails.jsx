@@ -13,9 +13,7 @@ const PatientDetails = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!token) {
-      navigate("/login");
-    }
+    if (!token) navigate("/login");
   }, [navigate]);
 
   const onSubmit = async (data) => {
@@ -51,15 +49,11 @@ const PatientDetails = () => {
         createdAt: new Date().toISOString(),
       };
 
-      // Save to reports history
       const existing = JSON.parse(localStorage.getItem("reports") || "[]");
       existing.unshift(patientRecord);
       localStorage.setItem("reports", JSON.stringify(existing));
-
-      // Save most recent for report page
       localStorage.setItem("recentPatient", JSON.stringify(patientRecord));
 
-      // Save report to backend
       try {
         await API.post("/reports", {
           name: patientRecord.name,
@@ -72,7 +66,7 @@ const PatientDetails = () => {
 
       reset();
       setStep(1);
-      window.location.href = "/patients/report";
+      navigate("/patients/report");
     } catch (err) {
       console.error(err);
       alert("Submit failed. Please check backend.");
@@ -93,52 +87,20 @@ const PatientDetails = () => {
             {step === 1 && (
               <div className="space-y-4">
                 <h2 className="text-2xl font-semibold">Patient Details</h2>
-                <input
-                  {...register("name", { required: true })}
-                  placeholder="Name"
-                  className="border p-2 rounded-md w-full"
-                />
-                <select
-                  {...register("gender", { required: true })}
-                  className="border p-2 rounded-md w-full"
-                >
+                <input {...register("name", { required: true })} placeholder="Name" className="border p-2 rounded-md w-full" />
+                <select {...register("gender", { required: true })} className="border p-2 rounded-md w-full">
                   <option value="">Gender</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
                 </select>
                 <div className="flex gap-3">
-                  <input
-                    type="number"
-                    {...register("age")}
-                    placeholder="Age"
-                    className="border p-2 rounded-md w-full"
-                  />
-                  <input
-                    type="email"
-                    {...register("email")}
-                    placeholder="Email"
-                    className="border p-2 rounded-md w-full"
-                  />
+                  <input type="number" {...register("age")} placeholder="Age" className="border p-2 rounded-md w-full" />
+                  <input type="email" {...register("email")} placeholder="Email" className="border p-2 rounded-md w-full" />
                 </div>
-                <input
-                  type="tel"
-                  {...register("phone")}
-                  placeholder="Phone"
-                  className="border p-2 rounded-md w-full"
-                />
-                <textarea
-                  {...register("address")}
-                  placeholder="Address"
-                  className="border p-2 rounded-md w-full"
-                />
+                <input type="tel" {...register("phone")} placeholder="Phone" className="border p-2 rounded-md w-full" />
+                <textarea {...register("address")} placeholder="Address" className="border p-2 rounded-md w-full" />
                 <div className="flex justify-end">
-                  <button
-                    type="button"
-                    onClick={() => setStep(2)}
-                    className="btn-brand"
-                  >
-                    Next: Upload Scan
-                  </button>
+                  <button type="button" onClick={() => setStep(2)} className="btn-brand">Next: Upload Scan</button>
                 </div>
               </div>
             )}
@@ -146,26 +108,10 @@ const PatientDetails = () => {
             {step === 2 && (
               <div className="space-y-4">
                 <h2 className="text-2xl font-semibold">Upload Scan</h2>
-                <input
-                  type="file"
-                  {...register("file", { required: true })}
-                  accept=".jpg,.jpeg,.png,.dcm"
-                />
+                <input type="file" {...register("file", { required: true })} accept=".jpg,.jpeg,.png,.dcm" />
                 <div className="flex justify-between">
-                  <button
-                    type="button"
-                    onClick={() => setStep(1)}
-                    className="px-4 py-2 rounded-md border"
-                  >
-                    Back
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={processing}
-                    className="btn-brand"
-                  >
-                    {processing ? "Processing..." : "Submit & Analyze"}
-                  </button>
+                  <button type="button" onClick={() => setStep(1)} className="px-4 py-2 rounded-md border">Back</button>
+                  <button type="submit" disabled={processing} className="btn-brand">{processing ? "Processing..." : "Submit & Analyze"}</button>
                 </div>
               </div>
             )}

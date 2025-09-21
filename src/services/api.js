@@ -3,7 +3,7 @@ import axios from "axios";
 const API_BASE =
   import.meta.env.VITE_API_BASE_URL ||
   (import.meta.env.MODE === "production"
-    ? "https://kidney-health-api.onrender.com/api"
+    ? "https://kidney-health-app.onrender.com/api"
     : "http://localhost:8000/api");
 
 const API = axios.create({
