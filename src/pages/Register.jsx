@@ -10,20 +10,16 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-
     if (email && password && name) {
       try {
-        const response = await API.post("/register", {
-          email,
-          password,
-          name,
-        });
+        const response = await API.post("/register", { email, password, name });
         const { access_token, user } = response.data;
         localStorage.setItem("token", access_token);
         localStorage.setItem("user", JSON.stringify(user));
         navigate("/detection");
       } catch (error) {
-        alert("Registration failed. Please try again.");
+        console.error("Register error:", error.response?.data || error.message);
+        alert(error.response?.data?.detail || "Registration failed. Please try again.");
       }
     }
   };

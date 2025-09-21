@@ -9,19 +9,16 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     if (email && password) {
       try {
-        const response = await API.post("/login", {
-          email: email,
-          password: password,
-        });
+        const response = await API.post("/login", { email, password });
         const { access_token, user } = response.data;
         localStorage.setItem("token", access_token);
         localStorage.setItem("user", JSON.stringify(user));
         navigate("/detection");
       } catch (error) {
-        alert("Login failed. Please check your credentials.");
+        console.error("Login error:", error.response?.data || error.message);
+        alert(error.response?.data?.detail || "Login failed. Please check your credentials.");
       }
     }
   };
@@ -58,9 +55,6 @@ const Login = () => {
           <a href="/register" className="text-indigo-600 hover:underline">
             Register
           </a>
-        </p>
-        <p className="text-xs mt-2 text-center text-gray-500 hover:underline cursor-pointer" onClick={() => navigate('/forgot-password')}>
-          Forgot password?
         </p>
       </form>
     </div>
