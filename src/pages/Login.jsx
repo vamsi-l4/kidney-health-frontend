@@ -1,25 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import API from "../services/api";
+import { login, isAuthenticated } from "../services/api";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Redirect if already logged in
+    if (isAuthenticated()) {
+      navigate("/detection");
+    }
+  }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if (email && password) {
-      try {
-        const response = await API.post("/login", { email, password });
-        const { access_token, user } = response.data;
-        localStorage.setItem("token", access_token);
-        localStorage.setItem("user", JSON.stringify(user));
-        navigate("/detection");
-      } catch (error) {
-        console.error("Login error:", error.response?.data || error.message);
-        alert(error.response?.data?.detail || "Login failed. Please check your credentials.");
-      }
+    setError("");
+    setLoading(true);
+
+    if (!email || !password) {
+      setError("Please enter both email and password");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      await login(email, password);
+      navigate("/detection");
+    } catch (error) {
+      console.error("Login error:", error);
+      setError(error.message || "Login failed. Please check your credentials.");
+    } finally {
+      setLoading(false);
     }
   };
 

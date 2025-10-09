@@ -1,4 +1,4 @@
-# TODO: Fix 401 Unauthorized on /api/reports
+# FIXED: 401 Unauthorized on /api/reports - caused by inconsistent SECRET_KEY between local and deployed environments. Now using fixed SECRET_KEY.
 
 ## Steps to Complete
 - [x] Add authentication check in client/src/pages/Reports.jsx (redirect to login if not authenticated)
