@@ -13,6 +13,8 @@ dist-ssr
 
 # Local env
 .env
+.env.example
+.env.production
 *.local
 
 # Editor files
