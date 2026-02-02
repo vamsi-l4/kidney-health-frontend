@@ -82,7 +82,7 @@ const API_BASE =
   import.meta.env.VITE_API_BASE_URL ||
   (import.meta.env.MODE === "production"
     ? "https://kidney-health-app.onrender.com/api"
-    : "http://127.0.0.1:8000/api");
+    : "http://localhost:8000/api");
 
 // ✅ Create axios instance
 const API = axios.create({
