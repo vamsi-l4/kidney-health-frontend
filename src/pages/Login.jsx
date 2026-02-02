@@ -12,7 +12,7 @@ const Login = () => {
   useEffect(() => {
     // Redirect if already logged in
     if (isAuthenticated()) {
-      navigate("/detection");
+      navigate("/");
     }
   }, [navigate]);
 
@@ -29,7 +29,7 @@ const Login = () => {
 
     try {
       await login(email, password);
-      navigate("/detection");
+      window.location.href = "/";
     } catch (error) {
       console.error("Login error:", error);
       setError(error.message || "Login failed. Please check your credentials.");
