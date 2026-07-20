@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { register, isAuthenticated } from "../services/api";
 
 const Register = () => {
@@ -110,9 +110,9 @@ const Register = () => {
         </button>
         <p className="text-sm mt-3 text-center">
           Already have an account?{" "}
-          <a href="/login" className="text-indigo-600 hover:underline">
+          <Link to="/login" className="text-indigo-600 hover:underline">
             Login
-          </a>
+          </Link>
         </p>
       </form>
     </div>

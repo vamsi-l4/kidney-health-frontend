@@ -58,7 +58,11 @@ const Reports = () => {
         <div className="max-w-5xl mx-auto">
           <h1 className="text-2xl font-bold mb-6">Patient Reports</h1>
 
-          {reports.length === 0 ? (
+          {loading ? (
+            <div className="p-6 bg-white border rounded text-sm text-gray-600">
+              Loading reports…
+            </div>
+          ) : reports.length === 0 ? (
             <div className="p-6 bg-yellow-50 border rounded text-sm">
               No reports yet. Please generate one from Detection.
             </div>

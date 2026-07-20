@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import kidneyLogo from "../assets/logo.png";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";

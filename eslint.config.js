@@ -23,7 +23,9 @@ export default defineConfig([
       },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      // Framer Motion's lowercase JSX namespace is valid usage, but ESLint's
+      // core rule cannot detect it without the full React ESLint plugin.
+      'no-unused-vars': ['error', { varsIgnorePattern: '^(?:[A-Z_].*|motion)$' }],
     },
   },
 ])
