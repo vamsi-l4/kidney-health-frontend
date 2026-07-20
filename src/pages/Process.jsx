@@ -59,7 +59,7 @@ const Process = () => {
       <div className="mt-16 text-center">
         <Link
           to="/patients"
-          className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-8 rounded-full transition flex items-center gap-2 mx-auto"
+          className="inline-flex items-center gap-2 rounded-full bg-indigo-600 px-8 py-3 font-medium text-white transition hover:bg-indigo-700"
         >
           <span>Start Detection Now</span>
           <svg

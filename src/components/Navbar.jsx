@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { LogOut, Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
 import kidneyLogo from "../assets/logo.png";
 
@@ -44,7 +44,6 @@ const Navbar = () => {
           <Link to="/patients">Detection</Link>
           <Link to="/process">How it Works</Link>
           <Link to="/reports">Reports</Link>
-          {user && <Link to="/profile">Profile</Link>}
         </nav>
 
         {/* Auth Buttons */}
@@ -66,9 +65,11 @@ const Navbar = () => {
               </Link>
               <button
                 onClick={handleLogout}
-                className="text-sm text-red-500 hover:text-red-600 font-medium"
+                aria-label="Log out"
+                title="Log out"
+                className="rounded-full p-2 text-slate-500 transition hover:bg-red-50 hover:text-red-600"
               >
-                Logout
+                <LogOut size={18} aria-hidden="true" />
               </button>
             </div>
           )}
@@ -99,15 +100,16 @@ const Navbar = () => {
           <Link to="/reports" onClick={() => setMenuOpen(false)}>Reports</Link>
           {user ? (
             <>
-              <Link to="/profile" onClick={() => setMenuOpen(false)}>Profile</Link>
               <button
                 onClick={() => {
                   setMenuOpen(false);
                   handleLogout();
                 }}
-                className="text-red-500"
+                aria-label="Log out"
+                title="Log out"
+                className="flex w-fit rounded-lg p-2 text-red-600 hover:bg-red-50"
               >
-                Logout
+                <LogOut size={18} aria-hidden="true" />
               </button>
             </>
           ) : (

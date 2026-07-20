@@ -8,7 +8,7 @@ import API from "../services/api";
 const PatientDetails = () => {
   const [step, setStep] = useState(1);
   const [processing, setProcessing] = useState(false);
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -87,20 +87,21 @@ const PatientDetails = () => {
             {step === 1 && (
               <div className="space-y-4">
                 <h2 className="text-2xl font-semibold">Patient Details</h2>
-                <input {...register("name", { required: true })} placeholder="Name" className="border p-2 rounded-md w-full" />
-                <select {...register("gender", { required: true })} className="border p-2 rounded-md w-full">
+                <input {...register("name", { required: "Enter the patient name" })} placeholder="Name" className="border p-2 rounded-md w-full" />
+                <select {...register("gender", { required: "Select a gender" })} className="border p-2 rounded-md w-full">
                   <option value="">Gender</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
                 </select>
                 <div className="flex gap-3">
-                  <input type="number" {...register("age")} placeholder="Age" className="border p-2 rounded-md w-full" />
-                  <input type="email" {...register("email")} placeholder="Email" className="border p-2 rounded-md w-full" />
+                  <input type="number" min="1" max="120" {...register("age", { required: "Enter a valid age", min: 1, max: 120 })} placeholder="Age" className="border p-2 rounded-md w-full" />
+                  <input type="email" {...register("email", { required: "Enter an email address" })} placeholder="Email" className="border p-2 rounded-md w-full" />
                 </div>
-                <input type="tel" {...register("phone")} placeholder="Phone" className="border p-2 rounded-md w-full" />
-                <textarea {...register("address")} placeholder="Address" className="border p-2 rounded-md w-full" />
+                <input type="tel" {...register("phone", { required: "Enter a phone number" })} placeholder="Phone" className="border p-2 rounded-md w-full" />
+                <textarea {...register("address", { required: "Enter an address" })} placeholder="Address" className="border p-2 rounded-md w-full" />
+                {Object.keys(errors).length > 0 && <p role="alert" className="text-sm text-red-600">Please complete every patient detail before continuing.</p>}
                 <div className="flex justify-end">
-                  <button type="button" onClick={() => setStep(2)} className="btn-brand">Next: Upload Scan</button>
+                  <button type="submit" className="btn-brand">Next: Upload Scan</button>
                 </div>
               </div>
             )}
