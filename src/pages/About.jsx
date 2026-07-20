@@ -1,8 +1,14 @@
 import React from 'react';
+import { Link, useLocation } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Footer from "./Footer";
+import kidneyImage from "../assets/kidneyimg.jpg";
 
 const About = () => {
+  const isStandalonePage = useLocation().pathname !== "/";
   return (
     <>
+      {isStandalonePage && <Navbar />}
       {/* About Section */}
       <section className="bg-gradient-to-b from-[#F5F7FF] via-[#fffbee] to-[#E6EFFF] py-12 px-6 sm:px-12 lg:px-24 max-w-full mx-auto text-center">
         <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900">
@@ -14,13 +20,13 @@ const About = () => {
       
 
       {/* Hero Section */}
-      <section className="flex flex-col md:flex-row items-center justify-center gap-10 max-md:px-4 max-w-7xl mx-auto py-16 px-6 sm:px-12 lg:px-24 bg-gradient-to-b from-[#F5F7FF] via-[#fffbee] to-[#E6EFFF]">
+      <div className="flex flex-col md:flex-row items-center justify-center gap-10 max-md:px-4 max-w-7xl mx-auto py-16 px-6 sm:px-12 lg:px-24 bg-gradient-to-b from-[#F5F7FF] via-[#fffbee] to-[#E6EFFF]">
 
         {/* Image Section */}
         <div className="relative rounded-2xl overflow-hidden shrink-0 max-w-md w-full shadow-2xl shadow-indigo-600/20">
           <img
             className="w-full object-cover rounded-2xl"
-            src="https://imgs.search.brave.com/qbLBSlBVekbCG_dCPXRYNmR8IrB8krGg6EUeZErNckE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9kb21m/NW9pbzZxcmNyLmNs/b3VkZnJvbnQubmV0/L21lZGlhbGlicmFy/eS8xNjc4Ny9jb252/ZXJzaW9ucy9wMy1r/aWRuZXlzLXdsMDcy/NS1naTEzMzQ4MjM0/NjYtdGh1bWIuanBn"
+            src={kidneyImage}
             alt="Kidney X-ray AI Detection"
           />
         </div>
@@ -41,7 +47,7 @@ const About = () => {
           <p className="mt-4">
             With a user-friendly interface and detailed AI reports, our system empowers healthcare professionals to make informed decisions.
           </p>
-          <button className="flex items-center gap-2 mt-8 hover:-translate-y-0.5 transition bg-gradient-to-r from-indigo-600 to-[#8A7DFF] py-3 px-8 rounded-full text-white text-lg font-medium">
+          <Link to="/detection" className="flex w-fit items-center gap-2 mt-8 hover:-translate-y-0.5 transition bg-gradient-to-r from-indigo-600 to-[#8A7DFF] py-3 px-8 rounded-full text-white text-lg font-medium">
             <span>Start Detection</span>
             <svg
               width="13"
@@ -55,12 +61,13 @@ const About = () => {
                 fill="#fff"
               />
             </svg>
-          </button>
+          </Link>
         </div>
-      </section>
+      </div>
 
       
       </section>
+      {isStandalonePage && <Footer />}
     </>
   );
 }

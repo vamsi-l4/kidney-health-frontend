@@ -1,7 +1,13 @@
 import React from 'react'
+import { Link, useLocation } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Footer from "./Footer";
 
 const Process = () => {
+  const isStandalonePage = useLocation().pathname !== "/";
   return (
+   <>
+   {isStandalonePage && <Navbar />}
    <section className="py-16 px-6 sm:px-10 bg-gradient-to-b from-[#F5F7FF] via-[#fffbee] to-[#E6EFFF]">
       {/* Header */}
       <div className="max-w-4xl mx-auto text-center">
@@ -51,8 +57,8 @@ const Process = () => {
 
       {/* CTA */}
       <div className="mt-16 text-center">
-        <button
-          onClick={() => window.location.href = "/detection"}
+        <Link
+          to="/detection"
           className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-8 rounded-full transition flex items-center gap-2 mx-auto"
         >
           <span>Start Detection Now</span>
@@ -71,9 +77,11 @@ const Process = () => {
               strokeLinejoin="round"
             />
           </svg>
-        </button>
+        </Link>
       </div>
     </section>
+    {isStandalonePage && <Footer />}
+    </>
   )
 }
 
