@@ -44,7 +44,7 @@ const HeroSection = () => {
             onClick={handleDetectionClick}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="mt-8 bg-indigo-600 text-white px-6 py-3 rounded-full text-sm font-medium flex items-center space-x-2 hover:bg-indigo-700 transition shadow-lg"
+            className="mx-auto mt-8 flex items-center space-x-2 rounded-full bg-indigo-600 px-6 py-3 text-sm font-medium text-white shadow-lg transition hover:bg-indigo-700 md:mx-0"
             type="button"
           >
             <span>Quick Detection</span>

@@ -58,7 +58,7 @@ const Process = () => {
       {/* CTA */}
       <div className="mt-16 text-center">
         <Link
-          to="/detection"
+          to="/patients"
           className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-8 rounded-full transition flex items-center gap-2 mx-auto"
         >
           <span>Start Detection Now</span>

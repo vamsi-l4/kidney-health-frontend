@@ -32,7 +32,7 @@ const About = () => {
         </div>
 
         {/* Text Section */}
-        <div className="text-sm text-slate-700 max-w-lg">
+        <div className="max-w-lg text-center text-sm text-slate-700 md:text-left">
           <h1 className="text-3xl sm:text-4xl uppercase font-bold text-slate-900 leading-tight">
             What we do?
           </h1>
@@ -47,7 +47,7 @@ const About = () => {
           <p className="mt-4">
             With a user-friendly interface and detailed AI reports, our system empowers healthcare professionals to make informed decisions.
           </p>
-          <Link to="/detection" className="flex w-fit items-center gap-2 mt-8 hover:-translate-y-0.5 transition bg-gradient-to-r from-indigo-600 to-[#8A7DFF] py-3 px-8 rounded-full text-white text-lg font-medium">
+          <Link to="/patients" className="mx-auto flex w-fit items-center gap-2 mt-8 hover:-translate-y-0.5 transition bg-gradient-to-r from-indigo-600 to-[#8A7DFF] py-3 px-8 rounded-full text-white text-lg font-medium md:mx-0">
             <span>Start Detection</span>
             <svg
               width="13"

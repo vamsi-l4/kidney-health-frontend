@@ -41,7 +41,7 @@ const Navbar = () => {
         <nav className="hidden md:flex gap-6 text-sm text-gray-700 font-medium">
           <Link to="/">Home</Link>
           <Link to="/about">About</Link>
-          <Link to="/detection">Detection</Link>
+          <Link to="/patients">Detection</Link>
           <Link to="/process">How it Works</Link>
           <Link to="/reports">Reports</Link>
           {user && <Link to="/profile">Profile</Link>}
@@ -94,7 +94,7 @@ const Navbar = () => {
         >
           <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
           <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
-          <Link to="/detection" onClick={() => setMenuOpen(false)}>Detection</Link>
+          <Link to="/patients" onClick={() => setMenuOpen(false)}>Detection</Link>
           <Link to="/process" onClick={() => setMenuOpen(false)}>How it Works</Link>
           <Link to="/reports" onClick={() => setMenuOpen(false)}>Reports</Link>
           {user ? (
