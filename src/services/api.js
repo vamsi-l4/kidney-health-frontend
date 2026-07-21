@@ -1,12 +1,12 @@
 import axios from "axios";
 
 // Set VITE_API_BASE_URL in your hosting provider. The fallback matches the
-// Render service name in server/render.yaml and keeps local development easy.
+// deployed Render service and keeps local development easy.
 const API_BASE = (
   import.meta.env.VITE_API_BASE_URL ||
   (import.meta.env.DEV
     ? "http://localhost:8000/api"
-    : "https://kidney-health-api.onrender.com/api")
+    : "https://kidney-health-app.onrender.com/api")
 ).replace(/\/$/, "");
 
 const API = axios.create({ baseURL: API_BASE, timeout: 30000 });
