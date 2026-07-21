@@ -59,6 +59,11 @@ const PatientDetails = () => {
           name: patientRecord.name,
           prediction: patientRecord.prediction,
           createdAt: patientRecord.createdAt,
+          age: patientRecord.age,
+          gender: patientRecord.gender,
+          email: patientRecord.email,
+          phone: patientRecord.phone,
+          address: patientRecord.address,
         });
       } catch (err) {
         console.error("Failed to save report to backend:", err);

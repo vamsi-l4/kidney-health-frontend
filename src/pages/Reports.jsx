@@ -55,7 +55,20 @@ const Reports = () => {
   }, [navigate]);
 
   const openReport = (report) => {
-    localStorage.setItem("recentPatient", JSON.stringify(report));
+    // The newest report may also exist in local storage with patient details
+    // while an older deployed server still returns the compact report format.
+    // Preserve those details when it is the same saved analysis.
+    let storedReport = null;
+    try {
+      storedReport = JSON.parse(localStorage.getItem("recentPatient") || "null");
+    } catch {
+      localStorage.removeItem("recentPatient");
+    }
+    const isCurrentReport = storedReport?.createdAt === report.createdAt;
+    const selectedReport = isCurrentReport
+      ? { ...report, ...storedReport, id: report.id, prediction: report.prediction }
+      : report;
+    localStorage.setItem("recentPatient", JSON.stringify(selectedReport));
     navigate("/patients/report");
   };
 
